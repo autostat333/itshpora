@@ -1,0 +1,32 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close_modal()"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title" id="myModalLabel">Remove Code Note</h4>
+</div>
+
+
+<div class="remove_container">
+	<h2>Do you really want to remove this Section with all CODE NOTES?
+	<br>
+
+
+	<div class="alert_show">
+		<span class="alert alert-warning" ng-show="show_alert!=false"><strong>Sorry, </strong>{{show_alert}}<span class="glyphicon glyphicon-remove alert_close" ng-click="show_alert=false"></span></span>
+	</div>
+
+
+</div>
+
+
+
+
+<div class="modal-footer">
+		<button type="button" class="btn btn-default" ng-click="close_modal()">Cancel</button>
+		<button type="button" class="btn btn-danger" ng-class="{disabled:loading}" ng-click="submit_modal()">
+			<i ng-show="loading" class="fa fa-spinner fa-spin"></i>
+			Remove
+		</button>
+</div>
+
+
+
+

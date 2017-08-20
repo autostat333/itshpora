@@ -1,0 +1,43 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close_modal()"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title" id="myModalLabel">Edit CODE NOTE</h4>
+</div>
+
+			
+
+<form class="form-horizontal form_add_section">
+	
+	<div class="form-group">
+		<label class="col-sm-4" >Enter New Comment</label>
+		<div class="col-sm-8">
+			<textarea ng-model="comment" class="form-control" placeholder="comment text"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-4" >Enter NEW CODE NOTE</label>
+		<div class="col-sm-8">
+			<textarea ng-model="code_note" class="form-control" placeholder="code note"></textarea>
+		</div>
+	</div>
+
+	<div class="alert_show">
+		<span class="alert alert-warning" ng-show="show_alert!=false"><strong>Sorry, </strong>{{show_alert}}<span class="glyphicon glyphicon-remove alert_close" ng-click="show_alert=false"></span></span>
+	</div>
+
+
+</form>
+
+
+
+
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" ng-click="close_modal()">Close</button>
+	<button type="button" class="btn btn-primary" ng-class="{disabled:loading}" ng-click="submit_modal()">
+		<i ng-show="loading" class="fa fa-spinner fa-spin"></i>
+		Save Changes
+	</button>
+</div>
+
+
+
+

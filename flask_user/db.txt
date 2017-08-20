@@ -1,0 +1,1 @@
+{"test1": "1", "yap1443639696": {"token_live_time": 86400, "name": "andrii", "roles": ["admin"], "pass": "77963b7a931377ad4ab5ad6a9cd718aa"}, "test2": "2", "yap1443644460": {"token_live_time": 86400, "name": "andrii_new", "roles": ["admin"], "pass": "bde3005de0ae58e737bf4c26553acbba"}}

@@ -1,0 +1,114 @@
+<div class="login_container"
+	animate-scroll="reduce"
+	when-scroll="900"
+	ng-class="{'reduce':CURRENT_USER!=false}"	
+	>
+
+	<img class="bg_img"
+		src="./static/img/bg.jpg"
+		crop-img="viewport"
+		>
+	<div class="bg_img_gradient"
+		animate-scroll="intro"
+		when-scroll="10"
+		ng-class={'intro':CURRENT_USER!=false&&CURRENT_USER!=undefined}
+		></div>
+	<div class="container">	
+		<div class="row">
+
+
+			<div class="col-sm-6 right_col">
+				<div class="txt_container">
+
+					<!--FOR SIGNED USER-->
+					<div 
+						class="signed"
+						ng-show="CURRENT_USER!=false"
+						>
+						<span class="title">
+						<span>Now you can add your own CODE NOTES!</span>
+						<br>
+						<a ui-sref="notes" ng-click="hide_menu()" class="btn btn-primary btn-lg">GoTo</a>				
+					</div>
+
+					<!--not SIGNED users-->
+					<div ng-show="CURRENT_USER==false">
+						<p 
+							class="descr animated bounceInDown"
+							animate-scroll="after"
+							when-scroll="30"
+							> Itshpora- <strong>WAREHOUSE</strong> for your code notes!
+						<p class="helps"
+							animate-scroll="animated flipInX"
+							when-scroll="150"
+							>It Shpora helps:
+						<ul class='list-6'>
+							<li 
+								animate-scroll="animated fadeIn" 
+								when-scroll="300"
+								>
+								<span>Keep order of code notes</span>
+							</li>
+							<li
+								animate-scroll="animated fadeIn"
+								when-scroll="400"	
+								>
+								<span>Add NOTES to storage</span>
+							</li>
+							<li
+								animate-scroll="animated fadeIn"
+								when-scroll="500"	
+								>
+								<span>SEARCH over storage</span>
+							</li>
+						</ul>
+					</div>
+
+					<div 
+						class="below_txt" 
+						ng-show="CURRENT_USER==false"
+						animate-scroll="animated flipInX"
+						when-scroll="600"	
+						>
+						<br>
+						<span>If you are <span class="highlight-yellow">UNSIGNED</span> - you can  see my CODE NOTES. 	
+				
+					</div>  <!--wrap for the ng-show only of entire block-->
+	
+
+
+				</div>
+
+
+			</div>
+
+
+			<div class="col-sm-6 left_col">
+
+				<!--after logining-->
+				<div class="logo_signed" ng-show='CURRENT_USER'>
+					<i class="fa fa-hand-peace-o"></i>
+					<span>Thanks for Joining!</span>
+				</div>
+					<!--end after logginnig-->
+				<div class="login_card" ng-if="!CURRENT_USER" 
+					login-registr
+					animate-scroll="login_slide_animation"
+					when-scroll="600"
+					>
+					<img src="./static/img/cloud_try.png">
+				</div>
+			</div>
+
+	
+	
+		</div>  <!--close ROW-->
+	
+		<div class="place_for_cloud"></div>
+
+	</div>  <!--close container-->
+
+
+
+
+</div>

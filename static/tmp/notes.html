@@ -1,0 +1,236 @@
+
+<div class="notes_container">
+	<img src="./static/img/bg.jpg" crop-img="viewport">
+	<div class="search_block">
+
+		<div class="search_input">
+
+			<form class="form-horizontal">
+				<div class="form-group form-group-lg">
+<!--					<label class="col-sm-3 control-label" for="formGroupInputLarge">SEARCH</label>  -->
+					<div class="col-sm-12">
+						<div class="form-group input_container">
+							<input ng-model="query" ng-model-options="{debounce:{'default':300}}" class="form-control" type="text" id="formGroupInputLarge">
+							<i ng-show="!search_loading" class="fa fa-search"></i>
+							<i ng-show="search_loading" class="fa fa-cog fa-spin"></i>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="navs_container">
+			<button type="button" ng-click="nav_state='quick_add'" ng-class="{active:nav_state=='quick_add'}" class="btn btn-default add_btn">
+				<i class="fa fa-plus-circle"></i> Quick Add
+			</button>
+			<button type="button" ng-click="nav_state='agenda'" ng-class="{active:nav_state=='agenda'}" class="btn btn-default agd_btn">
+				<i class="fa fa-list"></i> Agenda
+			</button>
+			<button type="button" ng-click="nav_state='search'" ng-class="{active:nav_state=='search'}" class="btn btn-default search_btn">
+				<i class="fa fa-search"></i> Search Results
+			</button>
+		</div>
+	</div>
+
+
+
+	<div ng-switch on="nav_state" class="switch_container">  <!--container for switching between search and agenga-->
+
+<!--//////////////////////////////////////////////////////////////////////////////-->	
+<!--/////////////////////////////QUICK_ADD////////////////////////////////////////-->	
+<!--//////////////////////////////////////////////////////////////////////////////-->	
+
+	<div class="main_content" ng-switch-when="quick_add" ng-controller="QuickAddController">
+
+
+		<div class="page-header">
+			<h1>Quick Add Notes</h1>
+		</div>	
+
+
+		<div class="add_form">
+	
+			<form>
+	 			<div class="form-group">
+					 <label>Choose SECTION</label>
+					 <select type="checkbox" ng-model="section_name" class="form-control" placeholder="Section name">
+						<option ng-repeat="item in sections">{{item['name']}}</option>
+					</select>
+				 </div>
+				<div class="form-group">
+					<label>Comment text for Code Notes</label>
+					<textarea type="text" ng-model="comment" class="form-control" placeholder="Comment"></textarea>
+
+				</div>
+				<div class="form-group">
+					<label>Code Notes</label>
+					<textarea type="text" ng-model="code_note" class="form-control" placeholder="Comment"></textarea>
+
+				</div>
+
+			</form>
+
+			<!--ALERT MESS-->
+			<div class="alert_wrap" ng-show="show_alert!=false">
+				<span class="alert alert-warning animated fadeIn">
+					<strong>Sorry,</strong> {{show_alert}}
+	
+					<span class="glyphicon glyphicon-remove close_btn" ng-click="show_alert=false"></span>
+				<span>
+			</div>
+			<!--END alert mess-->
+			<!--SUCCESS MESS-->
+			<div class="alert_wrap" ng-show="show_success!=false">
+				<span class="alert alert-success animated fadeIn">
+					<strong>Yes,</strong> {{show_success}}
+	
+					<span class="glyphicon glyphicon-remove close_btn" ng-click="show_success=false"></span>
+				<span>
+			</div>
+			<!--END alert mess-->
+
+			<br>
+			<button class="btn btn-success btn-lg" ng-click='submit_btn()' ng-disabled="CURRENT_USER==false">
+				<i class="fa fa-spinner fa-spin" ng-show="loading"></i>
+				<i class="fa fa-plus"></i> 
+				Add
+			</button>
+
+
+
+	
+		</div>  <!--close add_form  container for 50% width-->
+	</div>
+
+<!--//////////////////////////////////////////////////////////////////////////////-->	
+<!--/////////////////////////////AGENDA///////////////////////////////////////////-->	
+<!--//////////////////////////////////////////////////////////////////////////////-->	
+
+
+	<div class="main_content" ng-switch-when="agenda" ng-controller="AgendaController">
+		<div class="scroll_top" scroll-up><span class="glyphicon glyphicon-circle-arrow-up"></span></div>
+		<div class="page-header">
+			<h1>Notes agenda
+
+				<button type="button" class="btn btn-success btn-sm" ng-click="add_section()" ng-show="CURRENT_USER!=false">
+					<i class="fa fa-plus"></i> Add Section
+				</button>
+			</h1>
+			
+
+		</div>	
+
+		<div class="content row">
+			<div class="left_col">
+				<div class="mobile_menu" ng-click="mobile_show()">
+					<span class="glyphicon glyphicon-option-vertical"></span>
+				</div>
+				<div class="ul_container">
+				<ul class="nav nav-pills nav-stacked">
+					<i ng-show="section_loading" class="fa fa-spinner fa-spin"></i>
+					<li class="animated fadeIn" ng-repeat="item in sections" ng-class="{active:$parent.section_name['name']==item['name']}" ng-click="$parent.section_name = item"><a href="#">{{item.name}}</a></li>
+					
+					<div ng-show="!section_loading&&sections.length!=0" class="hor_line"></div>
+				</ul>
+				</div>
+			</div>
+
+
+			<div class="right_col">
+				<h3 ng-show="sections.length!=0">&#167;{{section_name['name']}}
+					<br class="next_line">
+					<button ng-show="sections.length!=0&&CURRENT_USER!=false" ng-click="add_notes()" class="btn btn-success btn-xs" ng-disabled="sections.length==0">
+						<span class="glyphicon glyphicon-plus"></span> Notes
+					</button>
+					<button ng-show="sections.length!=0&&CURRENT_USER!=false" ng-click="rename_section()" class="btn btn-default btn-xs" ng-disabled="sections.length==0">
+						<span class="glyphicon glyphicon-pencil"></span> Rename
+					</button>
+					<button ng-show="sections.length!=0&&CURRENT_USER!=false" ng-click="merge_section()" class="btn btn-default btn-xs" ng-disabled="sections.length==0">
+						<span class="glyphicon glyphicon-duplicate"></span> Merge
+					</button>
+					<button ng-click="remove_section()" ng-show="sections.length!=0&&CURRENT_USER!=false" class="btn btn-default btn-xs" ng-disabled="sections.length==0">
+						<span class="glyphicon glyphicon-remove"></span> Remove
+					</button>
+	
+				</h3>
+
+
+				<div ng-repeat="item in notes track by $index" id="{{item['_id']}}" 
+					class="item" 
+					ng-mouseover="$parent.show_box_btn[item['_id']]=true" 
+					ng-mouseout="$parent.show_box_btn[item['_id']]=false"
+					>
+					<div class="box_btns" ng-show="$parent.show_box_btn[item['_id']]">
+						<i ng-click="dispatch_note(item)" ng-show="CURRENT_USER!=false" class="fa fa-share" ng-disabled="CURRENT_USER==false"></i>
+						<i ng-click="edit_note(item)" ng-show="CURRENT_USER!=false" class="fa fa-pencil-square-o"></i>
+						<i ng-click="remove_note(item)" ng-show="CURRENT_USER!=false" class="fa fa-times"></i>
+					</div>
+					<p>{{item['_source']['comment']}}
+					<pre highlight class="javascript"><code>{{item['_source']['code_note']}}</code></pre>
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+
+	</div> <!--close main_content-->
+
+<!--//////////////////////////////////////////////////////////////////////////////-->	
+<!--/////////////////////////////SEARCH///////////////////////////////////////////-->	
+<!--//////////////////////////////////////////////////////////////////////////////-->	
+
+	<div class="main_content" ng-switch-when="search" ng-controller="SearchController">
+
+		<div class="page-header">
+			<h1>Search results</h1>
+
+		</div>	
+
+
+		<div class="min_height"></div>  <!--for mozilla min-height-->
+
+		<div class="content">
+			<img ng-show="$parent.search_loading" src="./static/img/preloader_3.gif"></img>
+
+			<h2 ng-show="$parent.search_loading==false&&$parent.search_results.length==0">No Results, try another query....</h2>
+
+			<div ng-repeat="item in $parent.search_results" class="item fadeIn animated">
+				<div class="box_btns" ng-show="show_box_btn"><i class="fa fa-times"></i><i class="fa fa-pencil-square-o"></i></div>
+				<h3>{{item['_source']['section']}}</h3>
+				<p>{{item['_source']['comment']}}
+				<pre highlight class="javascript">{{item['_source']['code_note']}}</pre>
+			</div>
+		</div>
+
+
+
+		<!--ALERT MESS-->
+		<div class="alert_wrap" ng-show="$parent.show_alert!=false">
+			<span class="alert alert-danger animated fadeIn">
+				<strong>Sorry,</strong> {{$parent.show_alert}}
+	
+				<span class="glyphicon glyphicon-remove close_btn" ng-click="$parent.show_alert=false"></span>
+			<span>
+		</div>
+		<!--close ALERT-->
+
+	</div> <!--close main_content-->
+
+
+
+
+
+
+
+
+
+	</div> <!--close switch_container-->
+
+
+
+
+</div>
+

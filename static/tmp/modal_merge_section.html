@@ -1,0 +1,47 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="close_modal()"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title" id="myModalLabel">Merge Section</h4>
+</div>
+
+			
+
+<form class="form-horizontal form_add_section">
+
+	<h3>ALL CODE NOTES will be dispatched to:</h3>
+	<br><div class="form-group">
+		<label class="col-sm-4"></label>
+		<div class="col-sm-8">
+			<select class="form-control" ng-model="new_section_name">
+				<option ng-repeat="item in sections" ng-show="item['name']!=$parent.section_name['name']">{{item['name']}}</option>
+			</select>
+
+		</div>
+	</div>
+	<br>
+	<p>Section <mark><b>{{section_name['name']}}</b></mark> will be DELETED after dispatching all CODE NOTES
+
+	
+	<div class="alert_show">
+		<span class="alert alert-warning" ng-show="show_alert!=false"><strong>Sorry, </strong>{{show_alert}}<span class="glyphicon glyphicon-remove alert_close" ng-click="show_alert=false"></span></span>
+	</div>
+
+
+</form>
+
+
+
+
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" ng-click="close_modal()">Close</button>
+	<button type="button" class="btn btn-primary" ng-disabled="loading" ng-click="submit_modal()">
+	<i ng-show="loading" class="fa fa-spinner fa-spin"></i>
+		Merge
+	</button>
+</div>
+
+
+
+
+
+
+
